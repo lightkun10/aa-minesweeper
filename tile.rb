@@ -1,6 +1,6 @@
-require_relative 'board'
+require_relative "board.rb"
 
-class Tile
+class Tiles
     attr_reader :pos
 
     DELTAS = [ 
@@ -32,9 +32,6 @@ class Tile
         @explored
     end
 
-    ## some helpful methods you could write 
-    #   reveal, neighbor_bomb_count)
-
     def inspect
         { pos: pos, 
           bombed: bombed?, 
@@ -65,7 +62,6 @@ end
 # test_tile = Tile.new(12, 2)
 # p test_tile.pos
 # p test_tile.flagged?
-# p test_tile.board
 
 # test_tile = Tile.new('board.rb', [2, 1])
 # # test_tile.neighbors
