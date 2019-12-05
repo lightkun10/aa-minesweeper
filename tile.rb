@@ -60,16 +60,3 @@ class Tile
         @bombed = true
     end
 end
-
-
-# if $PROGRAM_NAME == __FILE__
-#     Tile.new("board.rb", [2, 1]).neighbors
-#     # puts "\nThis will only be printed when directly launched."
-# end
-
-
-=begin
-
-    Tile.new(self, [1, 2])
-
-=end

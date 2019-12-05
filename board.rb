@@ -5,15 +5,8 @@ class Board
 
     def initialize(grid_size, num_of_bombs)
         @grid_size, @num_of_bombs = grid_size, num_of_bombs
-
-        # make tile on each board's row
-        @grid = Array.new(@grid_size) do |row|
-            Array.new(@grid_size) do |col|
-                Tile.new(self, [row, col])
-            end
-        end
-
-        plant_bombs
+        
+        load_board
     end
 
     def [](pos) # [2, 1]
@@ -21,14 +14,26 @@ class Board
         @grid[row][col] # @grid[2][1] == @grid[2, 1]
     end
 
-    def plant_bombs
-        # plant a bomb
-            # place a random position in the board
-            # need a random array consist of two element [3, 1]
-            # number strictly from 0 to size of the grid
+    def load_board
+        @grid = Array.new(@grid_size) do |row|
+            Array.new(@grid_size) do |col|
+                Tile.new(self, [row, col])
+            end
+        end
+        plant_bombs
+    end
 
-        random_pos = Array.new(2) { rand(@grid_size) }
-        p self[random_pos]
+    def plant_bombs
+            total_bombs = 0 # << counter
+            while total_bombs < @num_of_bombs
+                random_pos = Array.new(2) { rand(@grid_size) }
+                next if self[random_pos].bombed?
+                self[random_pos].plant_bomb
+                # p "#{total_bombs} until all bombs's planted..."
+                total_bombs += 1
+                print "\nAll bombs has planted\n\n" if total_bombs == 5
+            end
+        nil
     end
 end
 
