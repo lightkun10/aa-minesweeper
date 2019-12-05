@@ -53,7 +53,6 @@ class Tile
             coordinates.all? { |coord| coord.between?(0, @board.size - 1) }
         end
 
-        # next task: assign the new selected pos to each of table element position
         selected_adj_pos.map { |pos| @board[pos] }
     end
 
