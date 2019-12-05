@@ -32,6 +32,15 @@ class Tile
         @revealed
     end
 
+    def inspect
+        {
+            pos: pos,
+            bombed: bombed?,
+            flagged: flagged?,
+            revealed: revealed?
+        }.inspect
+    end
+
     def neighbors
         x = pos[0]
         y = pos[1]
@@ -48,15 +57,16 @@ class Tile
         selected_adj_pos.map { |pos| @board[pos] }
     end
 
-    def place_bomb
+    def plant_bomb
         @bombed = true
     end
 end
 
-if $PROGRAM_NAME == __FILE__
-    Tile.new("board.rb", [2, 1]).neighbors
-    # puts "\nThis will only be printed when directly launched."
-end
+
+# if $PROGRAM_NAME == __FILE__
+#     Tile.new("board.rb", [2, 1]).neighbors
+#     # puts "\nThis will only be printed when directly launched."
+# end
 
 
 =begin
