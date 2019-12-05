@@ -3,77 +3,60 @@ require_relative "board.rb"
 class Tiles
     attr_reader :pos
 
-    DELTAS = [ 
+    DELTAS = [
         [-1, -1],
         [-1, 0],
-        [-1, 1],
+        [-1, 1], 
         [0, -1],
         [0, 1],
         [1, -1],
-        [1, -1],
         [1, 0],
-        [1, 1] 
-    ]
+        [1, 1]
+    ].freeze
 
     def initialize(board, pos)
         @board, @pos = board, pos
-        @bombed, @flagged, @explored = false, false, false
+        # bombed? flagged? revealed?
+        @bombed, @flagged, @revealed = false, false, false
     end
 
     def bombed?
         @bombed
     end
-    
+
     def flagged?
         @flagged
     end
 
-    def explored?
-        @explored
+    def revealed?
+        @revealed
     end
 
     def inspect
-        { pos: pos, 
-          bombed: bombed?, 
-          flagged: flagged?, 
-          explored: explored? 
+        {
+            pos: pos,
+            bombed: bombed?,
+            flagged: flagged?,
+            revealed: revealed?
         }.inspect
     end
 
-    def place_bomb
+    def neighbors
+        x = pos[0]
+        y = pos[1]
+
+        adjacent_coordinates = DELTAS.map do |delta_x, delta_y|
+            [ x + delta_x, y + delta_y ]
+        end
+
+        selected_adj_pos = adjacent_coordinates.select do |coordinates|
+            coordinates.all? { |coord| coord.between?(0, @board.size - 1) }
+        end
+
+        selected_adj_pos.map { |pos| @board[pos] }
+    end
+
+    def plant_bomb
         @bombed = true
     end
-
-    def neighbors
-       x = pos[0]
-       y = pos[1]
-
-       adjacent_coordinates = DELTAS.map do |(delta_x, delta_y)|
-            [ x + delta_x, y + delta_y ]
-       end
-
-       adjacent_coordinates.select do |row, col|
-            [row, col].all? { |coordinate| coordinate.between?(0, @board.size - 1) }
-       end
-    end
-
 end
-
-# test_tile = Tile.new(12, 2)
-# p test_tile.pos
-# p test_tile.flagged?
-
-# test_tile = Tile.new('board.rb', [2, 1])
-# # test_tile.neighbors
-# p test_tile.board
-
-=begin
-
-    === about position ===
-
-    tile_1.pos[0], tile_1.pos[1] 
-
-    row(x-coordinate)    :      pos[0]
-    column(y-coordinate) :      pos[1]
-
-=end
