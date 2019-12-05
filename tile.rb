@@ -37,7 +37,7 @@ class Tile
         y = pos[1]
 
         adjacent_coordinates = DELTAS.map do |delta_x, delta_y|
-            [x+delta_x, y+delta_y]
+            [ x + delta_x, y + delta_y ]
         end
 
         selected_adj_pos = adjacent_coordinates.select do |coordinates|
@@ -45,11 +45,17 @@ class Tile
         end
 
         # next task: assign the new selected pos to each of table element position
+        selected_adj_pos.map { |pos| @board[pos] }
     end
 
     def place_bomb
         @bombed = true
     end
+end
+
+if $PROGRAM_NAME == __FILE__
+    Tile.new("board.rb", [2, 1]).neighbors
+    # puts "\nThis will only be printed when directly launched."
 end
 
 
