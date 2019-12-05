@@ -7,11 +7,20 @@ class Board
         @grid_size, @num_of_bombs = grid_size, num_of_bombs
 
         # make tile on each board's row
-        Array.new(@grid_size) do |row|
+        @grid = Array.new(@grid_size) do |row|
             Array.new(@grid_size) do |col|
-                p Tile.new(self, [row, col])
+                Tile.new(self, [row, col])
             end
         end
+
+        # plant a bomb
+            # place a random position in the board
+            # need a random array consist of two element [3, 1]
+            # number strictly from 0 to size of the grid
+
+        random_pos = Array.new(2) { rand(@grid_size) }
+        self[random_pos].plant_bomb
+        
     end
 
     def [](pos)
